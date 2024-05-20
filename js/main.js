@@ -1,98 +1,131 @@
+// Define global variables
 let dialogs = {};
-
 let currentHostId = "";
 let currentActionKey1 = "";
 let currentActionKey2 = "";
 let currentActionID = "";
 
-/*
-  Refreshes the information on the screen.
-*/
+/**
+ * Refreshes the information on the screen.
+ */
 function refreshScreen() {
-  for (i=0; i<hosts.length; i++) {
-    $("#"+hosts[i].Htmlname+"_text").html(hosts[i].Hostname+"<br/>"+hosts[i].IPAddress+"<br/>"+hosts[i].Domain);
-    //$("#"+hosts[i].Htmlname).css('background-color', 'darkblue');
+  // Loop through all hosts
+  for (let i = 0; i < hosts.length; i++) {
+    // Update the HTML of each host with its hostname, IP address, and domain
+    $("#" + hosts[i].Htmlname + "_text").html(hosts[i].Hostname + "<br/>" + hosts[i].IPAddress + "<br/>" + hosts[i].Domain);
   }
+
+  // Make the hosts draggable
   initiateDraggableHosts();
 }
 
-/*
-  Initiates the draggability of the "Host" objects.
-*/
+/**
+ * Makes the "Host" objects draggable.
+ */
 function initiateDraggableHosts() {
-  $('.host').draggable({})
+  $('.host').draggable({
+    // When dragging stops, redraw the connections
+    stop: function() {
+      drawConnections();
+    }  
+  });
+}
+
+/**
+ * Draws connections between hosts.
+ * TODO: Implement this function.
+ */
+function drawConnections() {  
+  // Implementation goes here
 }
 
 /*
   Generates the context menu items.
 */
 function getContextMenuItems() {
-  var i1 = {
+  // Define the first set of menu items
+  var basicMenuItems = {
     "edit": {name: "Host Info", icon: "edit"},
     "sep0": "---------",
     "add": {
         name: "Add", icon: "add",
         items: {
           "connection": {name: "Connection", icon: "paste"},
-          "application": {name: "Application", icon: "paste"}
+          "application": {name: "Application", icon: "paste"},
+          "account": {name: "Account", icon: "paste"}
         }
     },
     "sep1": "---------"
-    };
+  };
 
-  var i2 = getActionMenuItems();
+  // Get the action menu items
+  var actionMenuItems = getActionMenuItems();
   
-  var i3 = {
+  // Define the delete menu item
+  var deleteMenuItem = {
       "sep2": "---------",
-      "accounts": {name: "Accounts", icon: "paste"},
-      "sep3": "---------",
       "delete": {name: "Delete", icon: "delete"}
-    };
+  };
 
-  var items;
+  // Combine all the menu items into one object
+  var allMenuItems = Object.assign(basicMenuItems, actionMenuItems, deleteMenuItem);
 
-  items = Object.assign(i1, i2);
-  items = Object.assign(items, i3);
-
-  return items;
+  return allMenuItems;
 }
 
 /*
-  Generates the context menu for the Actions based on the dataset in general.js.
+  Generates the action menu items based on the guide object.
 */
 function getActionMenuItems() {
-  var items = {};
+  // Initialize an empty object to hold the menu items
+  var menuItems = {};
 
-  Object.keys(guide).forEach(key => { // Enum, Shell, etc.
-    var itemOut = {};
-    var itemsOut = {};
-    Object.keys(guide[key]).forEach(key2 => {  // Items
-      itemsOut["action_"+key+"_"+key2] = {
-        "name": key2,
+  // Loop over each key in the guide object
+  Object.keys(guide).forEach(category => { // Enum, Shell, etc.
+    // Initialize an empty object for this category
+    var categoryItem = {};
+    var actionItems = {};
+
+    // Get the keys of the guide for this category and sort them
+    var actionKeys = Object.keys(guide[category]);
+    actionKeys.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+
+    // Loop over each key in the sorted keys
+    actionKeys.forEach(actionKey => {  // Items
+      // Add an item for this action to the actionItems object
+      actionItems["action_" + category + "_" + actionKey] = {
+        "name": actionKey,
         "icon": "paste"
       }
     });
 
-    items["action_"+key] = itemOut;
-    items["action_"+key]["name"] = key;
-    items["action_"+key]["icon"] = "cut";
-    items["action_"+key]["items"] = itemsOut;
+    // Add the category item to the menuItems object
+    menuItems["action_" + category] = categoryItem;
+    menuItems["action_" + category]["name"] = category;
+    menuItems["action_" + category]["icon"] = "cut";
+    menuItems["action_" + category]["items"] = actionItems;
   });
 
-  return items;
+  // Return the menu items
+  return menuItems;
 }
 
 /*
   Initiates the Context Menu for the "Host" objects.
 */
 function initiateContextMenu() {
+  // Use jQuery's contextMenu plugin to create the context menu
   $.contextMenu({
+    // Apply the context menu to all elements with the 'host' class
     selector: '.host', 
+
+    // Define a callback function to be called when a menu item is clicked
     callback: function(key, options) {
-        //var m = "clicked: " + key;
-        //window.console && console.log(m) || alert(m); 
+        // Call the contextMenuClicked function with the clicked element and the key of the clicked item
         contextMenuClicked(this[0], key);
     },
+
+    // Get the items for the context menu
     items: getContextMenuItems()
   });
 }
@@ -110,6 +143,18 @@ function contextMenuClicked(obj, key) {
   }
 
   switch (key) {
+    case "connection":
+      var actionKey = key.split("_");
+      loadConnectionDialog(actionKey[1],actionKey[2]);
+      break
+    case "application":
+      var actionKey = key.split("_");
+      loadApplicationDialog(actionKey[1],actionKey[2]);
+      break;
+      case "account":
+        var actionKey = key.split("_");
+        loadAccountDialog(actionKey[1],actionKey[2]);
+        break;
     case "edit":
       showHostInfoDialog();
       break;

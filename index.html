@@ -4,33 +4,43 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- Page Title -->
         <title>hOwl</title>
 
+        <!-- Importing jQuery and other libraries -->
         <script src="libraries/jquery/jquery-3.2.1.min.js"></script>
         <script src="libraries/jquery-ui/jquery-ui.js"></script>
         <script src="libraries/contextmenu/jquery.contextMenu.js"></script>
         <script src="libraries/contextmenu/jquery.ui.position.min.js"></script>
 
+        <!-- Importing general data and scripts -->
         <script src="data/general.js"></script>
-        
         <script src="js/hosts.js"></script>
         <script src="js/main.js"></script>
+
+        <!-- Importing dialog scripts -->
         <script src="js/ui/hostInfoDialog.js"></script>
         <script src="js/ui/actionDialog.js"></script>
+        <script src="js/ui/connectionDialog.js"></script>
+        <script src="js/ui/applicationDialog.js"></script>
+        <script src="js/ui/accountDialog.js"></script>
         <script src="js/ui/resultsDialog.js"></script>
+        <script src="js/ui/importExportDialog.js"></script>
 
+        <!-- Importing CSS -->
         <link rel="stylesheet" href="libraries/contextmenu/jquery.contextMenu.min.css">
         <link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.css">
         <link rel="stylesheet" href="css/main.css">
-
-        <style>
-        </style>
     </head>
     <body>
+        <!-- Header Section -->
         <div class="header">
             <span id="headerTitle">hOwl</span>
             <input type="button" value="Add Host" onclick="addNewHost()"/>
+            <input type="button" value="Import/Export Data" id="import-export-data-button"/>
         </div>
+
+        <!-- Host Info Dialog -->
         <div id="hostInfoDialog">
             <div id="hostinfo-dialog-form" title="Host Info">
                 <form>
@@ -41,30 +51,149 @@
                     <input type="text" name="ipaddress" id="ipaddress" value="x.x.x.x" class="text ui-widget-content ui-corner-all">
                     <label for="os">Operating System</label>
                     <input type="text" name="os" id="os" value="" class="text ui-widget-content ui-corner-all">
-                    <label for="domain">Domain</label>
-                    <input type="text" name="domain" id="domain" value="" class="text ui-widget-content ui-corner-all">
-               
-                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                   </fieldset>
                 </form>
             </div>
         </div>
+
+        <!-- Connection Dialog -->
+        <div id="connectionDialog">
+            <div id="connection-dialog-form" title="Connections">
+                <form>
+                    <fieldset>
+                        <!-- Current Connections Group -->
+                        <div class="connection-group">
+                            <label for="current-connections">Current Connections</label>
+                            <select name="current-connections" id="current-connections" class="text ui-widget-content ui-corner-all" multiple>
+                                <!-- Current connections will be populated dynamically -->
+                            </select>
+                            <button type="button" id="remove-connection-button">Remove Connection</button>
+                        </div>
+
+                        <!-- Available Connections Group -->
+                        <div class="connection-group">
+                            <label for="available-connections">Available Connections</label>
+                            <select name="available-connections" id="available-connections" class="text ui-widget-content ui-corner-all" multiple>
+                                <!-- Available connections will be populated dynamically -->
+                            </select>
+                            <button type="button" id="add-connection-button">Add Connection</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <!-- Application Dialog -->
+        <div id="applicationDialog">
+            <div id="application-dialog-form" title="Applications">
+                <form>
+                    <fieldset>
+                        <!-- Current Applications Group -->
+                        <div class="application-group">
+                            <label for="current-applications">Current Applications</label>
+                            <select name="current-applications" id="current-applications" class="text ui-widget-content ui-corner-all" multiple>
+                                <!-- Current applications will be populated dynamically -->
+                            </select>
+                            <button type="button" id="remove-application-button">Remove Application</button>
+                        </div>
+
+                        <!-- New Application Group -->
+                        <div class="application-group">
+                            <label for="application-name">Application Name</label>
+                            <input type="text" name="application-name" id="application-name" class="text ui-widget-content ui-corner-all">
+                        
+                            <label for="protocol">Protocol</label>
+                            <select name="protocol" id="protocol" class="text ui-widget-content ui-corner-all">
+                                <option value="TCP">TCP</option>
+                                <option value="UDP">UDP</option>
+                            </select>
+                        
+                            <label for="port-number">Port Number</label>
+                            <input type="number" name="port-number" id="port-number" class="text ui-widget-content ui-corner-all">
+                        
+                            <button type="button" id="add-application-button">Add Application</button>
+                        </div>
+
+                        <!-- Hidden submit input -->
+                        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <!-- Account Dialog -->
+        <div id="accountDialog">
+            <div id="account-dialog-form" title="Accounts">
+                <form>
+                    <fieldset>
+                        <!-- Current Accounts Group -->
+                        <div class="account-group">
+                            <label for="current-accounts">Current Accounts</label>
+                            <select name="current-accounts" id="current-accounts" class="text ui-widget-content ui-corner-all" multiple>
+                                <!-- Current accounts will be populated dynamically -->
+                            </select>
+                            <button type="button" id="remove-account-button">Remove Account</button>
+                        </div>
+
+                        <!-- New Account Group -->
+                        <div class="account-group">
+                            <label for="account-description">Account Description</label>
+                            <input type="text" name="account-description" id="account-description" class="text ui-widget-content ui-corner-all">
+                                            
+                            <label for="account-username">Account Username</label>
+                            <input type="text" name="account-username" id="account-username" class="text ui-widget-content ui-corner-all">
+
+                            <label for="account-password">Account Password</label>
+                            <input type="text" name="account-password" id="account-password" class="text ui-widget-content ui-corner-all">
+                                            
+                            <button type="button" id="add-account-button">Add Account</button>
+                        </div>
+
+                        <!-- Hidden submit input -->
+                        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <!-- Action Dialog -->
         <div id="actionDialog">
             <div id="action-dialog-form" title="Action">
+                <!-- Accordion for different action sections -->
                 <div id="actionAccordion">
                     <h3>Section 1</h3>
                     <div>
-                      <p>
-                      Details Here
-                      </p>
+                        <!-- Content for Section 1 will go here -->
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Results Dialog -->
         <div id="resultsDialog">
             <div id="results-dialog-form" title="Results">
+                <!-- Textarea for displaying results -->
                 <textarea id="results-textarea"></textarea>
             </div>
         </div>
+
+        <!-- Import/Export Dialog -->
+        <div id="importExportDialog">
+            <div id="import-export-dialog-form" title="Import/Export Data">
+                <form>
+                    <fieldset>
+                        <!-- Data field for import/export -->
+                        <label for="import-export-data-field">Data</label>
+                        <textarea id="import-export-data-field" id="data-field" class="text ui-widget-content ui-corner-all"></textarea>
+                
+                        <!-- Import and Export buttons -->
+                        <button type="button" id="import-data-button">Import Data</button>
+                        <button type="button" id="export-data-button">Export Data</button>
+                
+                        <!-- Hidden submit input -->
+                        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                    </fieldset>
+                </form>
+            </div>
     </body>
 </html>

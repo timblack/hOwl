@@ -1,16 +1,5 @@
+TODO
 
-Add Connection
-Add Application
-Accounts
-
-Update Database
-Import/Export Dataset
-
---------------------------------------------
-
-Add Network
-
-Export Config
-Import Config
-
+Add Network - Section-off computers based on networks
+Import/Export Tool Datasets
 Change Context Menu + Results based on Operating System
