@@ -1,0 +1,16 @@
+
+Add Connection
+Add Application
+Accounts
+
+Update Database
+Import/Export Dataset
+
+--------------------------------------------
+
+Add Network
+
+Export Config
+Import Config
+
+Change Context Menu + Results based on Operating System

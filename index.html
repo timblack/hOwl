@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>hOwl</title>
+
+        <script src="libraries/jquery/jquery-3.2.1.min.js"></script>
+        <script src="libraries/jquery-ui/jquery-ui.js"></script>
+        <script src="libraries/contextmenu/jquery.contextMenu.js"></script>
+        <script src="libraries/contextmenu/jquery.ui.position.min.js"></script>
+
+        <script src="data/general.js"></script>
+        
+        <script src="js/hosts.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/ui/hostInfoDialog.js"></script>
+        <script src="js/ui/actionDialog.js"></script>
+        <script src="js/ui/resultsDialog.js"></script>
+
+        <link rel="stylesheet" href="libraries/contextmenu/jquery.contextMenu.min.css">
+        <link rel="stylesheet" href="libraries/jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <style>
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <span id="headerTitle">hOwl</span>
+            <input type="button" value="Add Host" onclick="addNewHost()"/>
+        </div>
+        <div id="hostInfoDialog">
+            <div id="hostinfo-dialog-form" title="Host Info">
+                <form>
+                  <fieldset>
+                    <label for="hostname">Hostname</label>
+                    <input type="text" name="hostname" id="hostname" value="" class="text ui-widget-content ui-corner-all">
+                    <label for="ipaddress">IP Address</label>
+                    <input type="text" name="ipaddress" id="ipaddress" value="x.x.x.x" class="text ui-widget-content ui-corner-all">
+                    <label for="os">Operating System</label>
+                    <input type="text" name="os" id="os" value="" class="text ui-widget-content ui-corner-all">
+                    <label for="domain">Domain</label>
+                    <input type="text" name="domain" id="domain" value="" class="text ui-widget-content ui-corner-all">
+               
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                  </fieldset>
+                </form>
+            </div>
+        </div>
+        <div id="actionDialog">
+            <div id="action-dialog-form" title="Action">
+                <div id="actionAccordion">
+                    <h3>Section 1</h3>
+                    <div>
+                      <p>
+                      Details Here
+                      </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="resultsDialog">
+            <div id="results-dialog-form" title="Results">
+                <textarea id="results-textarea"></textarea>
+            </div>
+        </div>
+    </body>
+</html>
