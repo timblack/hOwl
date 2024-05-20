@@ -2,6 +2,8 @@
 
 hOwl is a standalone webapp designed to enable and simplify pen-testing learning.
 
+To get started, visit: https://timblack.github.io/hOwl/
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -12,7 +14,7 @@ hOwl is a standalone webapp designed to enable and simplify pen-testing learning
 
 ## Installation
 
-The webapp is standalone. Simply open index.html in your browser.
+The webapp is standalone. Simply open index.html in your browser, or visit https://timblack.github.io/hOwl/
 
 ## Usage 
 
